@@ -8,7 +8,7 @@ image:
   repository: earthly/buildkitd
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v0.6.2"
+  tag: "v0.6.10"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -82,4 +82,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-persistentVolumeClaimName: "earthly-ebs-claim"
+
+persistence:
+  accessMode: 'ReadWriteOnce'
+  enabled: false
+  size: 10Gi
+  storageClass: ""

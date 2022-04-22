@@ -1,11 +1,21 @@
+{{- if .Values.persistence.enabled }}
+{{- if not .Values.persistence.existingClaim -}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: earthly-ebs-claim
+  name: "pvc-{{ .Release.Name }}"
 spec:
   accessModes:
-    - ReadWriteOnce
-  storageClassName: gp2
+    - {{ .Values.persistence.accessMode | quote }}
   resources:
     requests:
-      storage: 50Gi
+      storage: {{ .Values.persistence.size | quote }}
+{{- if .Values.persistence.storageClass }}
+{{- if (eq "-" .Values.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}

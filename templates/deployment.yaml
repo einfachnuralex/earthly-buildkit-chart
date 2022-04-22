@@ -54,7 +54,7 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.persistentVolumeClaimName }}
+          {{- if .Values.persistence.enabled }}
           volumeMounts:
             - name: earthly-cache
               mountPath: /tmp/earthly
@@ -72,9 +72,9 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.persistentVolumeClaimName }}
+      {{- if .Values.persistence.enabled }}
       volumes:
         - name: earthly-cache
           persistentVolumeClaim:
-            claimName: {{ . }}
+            claimName: "pvc-{{ .Release.Name }}"
       {{- end }}
