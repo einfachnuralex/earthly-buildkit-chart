@@ -41,6 +41,8 @@ spec:
               value: "true"
             - name: BUILDKIT_TLS_ENABLED
               value: "false"
+            - name: EARTHLY_SKIP_CGROUP_SETUP
+              value: "true"
             - name: CACHE_SIZE_MB
               value: "45000"
             # - name: BUILDKIT_SCHEDULER_DEBUG
